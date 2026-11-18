@@ -1,0 +1,324 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Email Authentication Gateway</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+
+        body {
+            background: #f1f5f9;
+            color: #1e293b;
+            min-height: 100vh;
+        }
+
+        header {
+            background: linear-gradient(135deg, #0f172a, #1e3a8a);
+            color: white;
+            padding: 35px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: #cbd5e1;
+            font-size: 15px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 32px;
+            border-radius: 14px;
+            box-shadow: 0 5px 25px rgba(15, 23, 42, 0.08);
+        }
+
+        .section-heading {
+            color: #172554;
+            font-size: 23px;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        label {
+            display: block;
+            margin: 20px 0 8px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            background: #f8fafc;
+            transition: 0.2s;
+        }
+
+        input:focus, textarea:focus {
+            border-color: #2563eb;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        textarea {
+            min-height: 180px;
+            resize: vertical;
+            font-family: Consolas, monospace;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 15px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+        }
+
+        .results {
+            margin-top: 35px;
+            padding-top: 25px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .results h2 {
+            color: #172554;
+            margin-bottom: 20px;
+        }
+
+        .result-item {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 18px;
+            margin: 13px 0;
+            border-radius: 9px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .result-item strong {
+            font-size: 15px;
+        }
+
+        .result-value {
+            font-weight: 700;
+            padding: 7px 13px;
+            border-radius: 20px;
+            font-size: 13px;
+            background: #e2e8f0;
+            color: #334155;
+            text-align: center;
+        }
+
+        .result-value.pass {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .result-value.fail {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .result-value.warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .result-value.neutral {
+            background: #e2e8f0;
+            color: #475569;
+        }
+
+        .error {
+            background: #fee2e2;
+            color: #b91c1c;
+            padding: 12px;
+            margin-top: 18px;
+            border-radius: 7px;
+        }
+
+        .security-note {
+            margin-top: 25px;
+            padding: 15px;
+            background: #eff6ff;
+            border-left: 4px solid #2563eb;
+            border-radius: 6px;
+            color: #334155;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px 15px;
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 23px;
+            }
+
+            .card {
+                padding: 22px;
+            }
+
+            .result-item {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Secure Email Authentication Gateway</h1>
+    <p>Protecting Emails Against Spoofing and Phishing</p>
+</header>
+
+<div class="container">
+
+    <div class="card">
+
+        <h2 class="section-heading">Email Header Analyzer</h2>
+
+        <p class="description">
+            Analyze email authentication details using SPF, DKIM
+            and DMARC security mechanisms.
+        </p>
+
+        <form action="/check" method="POST">
+
+            <label>Sender Email Address</label>
+            <input type="email"
+                   name="sender_email"
+                   placeholder="example@gmail.com"
+                   required>
+
+            <label>Sender IP Address</label>
+            <input type="text"
+                   name="sender_ip"
+                   placeholder="Enter sender IP address"
+                   required>
+
+            <label>Raw Email Header and Body</label>
+            <textarea name="email_header"
+                      placeholder="Paste the complete raw email, including headers and body..."
+                      required></textarea>
+
+            <button type="submit">Analyze Email</button>
+
+        </form>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+
+        {% if results %}
+
+        <div class="results">
+
+            <h2>Authentication Results</h2>
+
+            <div class="result-item">
+                <strong>SPF Authentication</strong>
+                <span class="result-value
+                    {% if results.spf == 'PASS' %}pass
+                    {% elif results.spf in ['FAIL', 'HARDFAIL', 'ERROR'] %}fail
+                    {% elif results.spf in ['SOFTFAIL', 'NEUTRAL'] %}warning
+                    {% else %}neutral{% endif %}">
+                    {{ results.spf }}
+                </span>
+            </div>
+
+            <div class="result-item">
+                <strong>DKIM Authentication</strong>
+                <span class="result-value
+                    {% if results.dkim == 'PASS' %}pass
+                    {% elif results.dkim in ['FAIL', 'ERROR'] %}fail
+                    {% elif results.dkim == 'INCOMPLETE EMAIL' %}warning
+                    {% else %}neutral{% endif %}">
+                    {{ results.dkim }}
+                </span>
+            </div>
+
+            <div class="result-item">
+                <strong>DMARC Authentication</strong>
+                <span class="result-value
+                    {% if results.dmarc == 'PASS' %}pass
+                    {% elif results.dmarc == 'FAIL' %}fail
+                    {% elif 'RECORD FOUND' in results.dmarc %}pass
+                    {% elif results.dmarc == 'ERROR' %}fail
+                    {% else %}warning{% endif %}">
+                    {{ results.dmarc }}
+                </span>
+            </div>
+
+        </div>
+
+        {% endif %}
+
+        <div class="security-note">
+            <strong>Security Information</strong><br>
+            SPF checks the authorized sending server.
+            DKIM verifies the email's digital signature.
+            DMARC checks domain alignment and authentication policy.
+            A published DMARC record does not automatically mean
+            that an individual email has passed DMARC.
+        </div>
+
+    </div>
+
+</div>
+
+<footer>
+    Secure Email Gateway | SPF | DKIM | DMARC
+    <br><br>
+    Academic Project
+</footer>
+
+</body>
+</html>
